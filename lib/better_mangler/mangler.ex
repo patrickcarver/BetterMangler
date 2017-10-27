@@ -19,7 +19,21 @@ defmodule BetterMangler.Mangler do
 
         letters = word |> String.codepoints
 
-        {template, letters}
+        process(template, letters, [])
+    end
+
+    defp process(template, letters, list) do
+        part_of_speech = hd(template)
+        letter = hd(letters)
+
+        word = WordService.get_random_word(part_of_speech, letter)
+        new_list = list ++ word
+
+        process(tl(template), tl(letters), new_list)
+    end
+
+    defp process([], [], list) do
+        Enum.join(list, " ")
     end
 
     defp get_template(length) do

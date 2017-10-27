@@ -1,17 +1,20 @@
 defmodule BetterMangler.WordService do
     alias Poison
 
-    
-
-    def get_random(type) when type in [:adjective, :adverb, :noun, :verb] do
+    def get_random(type, letter) when type in [:adjective, :adverb, :noun, :verb] do
         type 
-        |> load_words() 
+        |> load_words()
+        |> get_words_starting_with_letter(String.downcase(letter))
         |> Enum.random()
         |> get_tense_if_verb(type) 
     end
 
-    def get_random(_) do
+    def get_random(_, _) do
         { :error, "Not a recognized option" }
+    end
+
+    defp get_words_starting_with_letter(list, letter) do
+        list |> Enum.filter(fn (word) -> word |> String.starts_with?(letter) end)
     end
 
     defp get_tense_if_verb(map, type) when type == :verb do
