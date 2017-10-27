@@ -1,11 +1,8 @@
-defmodule Mangler do
+defmodule BetterMangler.Mangler do
 	alias Poison
+	alias BetterMangler.WordService
 
 	def run(word) do
-		"../../assets/adjectives.json"
-		|> Path.expand(__DIR__)
-		|> File.read!()
-		|> Poison.decode!()
-		|> Map.fetch("adjectives")
+		WordService.load_adjectives()
 	end
 end
