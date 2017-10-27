@@ -2,7 +2,7 @@ defmodule BetterMangler.WordService do
 	alias Poison
 
 	def get_random(:adverb) do
-		load_adverbs |> Enum.random()
+		load_adverbs() |> Enum.random()
 	end
 
 	def get_random(:noun) do
