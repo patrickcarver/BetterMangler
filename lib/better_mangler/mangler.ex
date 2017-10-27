@@ -17,16 +17,16 @@ defmodule BetterMangler.Mangler do
     defp mangle(word) do
         template = word |> String.length |> get_template
 
-        word 
-        |> String.codepoints
+      #  word 
+      #  |> String.codepoints
     end
 
     defp get_template(length) do
         template = %{
-            1 => [{ :noun }, { :verb }, { :adjective }, { :adverb }],
-            2 => [{ :noun, :verb }, { :adjective, :noun }],
-            3 => [{ :noun, :verb, :adverb },{ :adjective, :noun, :verb }, { :noun, :verb, :noun }],
-            4 => [{ :adjective, :noun, :verb, :adverb }],
+            1 => [[ :noun ], [ :verb ], [ :adjective ], [ :adverb ]],
+            2 => [[ :noun, :verb ], [ :adjective, :noun ]],
+            3 => [[ :noun, :verb, :adverb ],[ :adjective, :noun, :verb ], [ :noun, :verb, :noun ]],
+            4 => [[ :adjective, :noun, :verb, :adverb ]],
             5 => [],
             6 => [],
             7 => [],
@@ -34,6 +34,9 @@ defmodule BetterMangler.Mangler do
             9 => [],
             10 => []
         }
+
+        { :ok, list } = template |> Map.fetch(length)
+        list |> Enum.random()
     end
 
 end
