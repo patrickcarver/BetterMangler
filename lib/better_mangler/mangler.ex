@@ -23,10 +23,10 @@ defmodule BetterMangler.Mangler do
 
 	defp get_template(length) do
 		template = %{
-			1 => [],
-			2 => [],
-			3 => [{:noun, :verb, :adverb},{:adjective, :noun, :verb}],
-			4 => [],
+			1 => [{ :noun }, { :verb }, { :adjective }, { :adverb }],
+			2 => [{ :noun, :verb }, { :adjective, :noun }],
+			3 => [{ :noun, :verb, :adverb },{ :adjective, :noun, :verb }, { :noun, :verb, :noun }],
+			4 => [{ :adjective, :noun, :verb, :adverb }],
 			5 => [],
 			6 => [],
 			7 => [],
