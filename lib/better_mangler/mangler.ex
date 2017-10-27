@@ -3,6 +3,6 @@ defmodule BetterMangler.Mangler do
 	alias BetterMangler.WordService
 
 	def run(word) do
-		WordService.load_adjectives()
+		WordService.get(:adjective)
 	end
 end
