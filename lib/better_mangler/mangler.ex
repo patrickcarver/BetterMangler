@@ -1,8 +1,7 @@
 defmodule BetterMangler.Mangler do
-	alias Poison
 	alias BetterMangler.WordService
 
 	def run(word) do
-		WordService.get(:adjective)
+		WordService.get_random(:adjective)
 	end
 end

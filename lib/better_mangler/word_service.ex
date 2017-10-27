@@ -1,4 +1,5 @@
 defmodule BetterMangler.WordService do
+	alias Poison
 
 	def get_random(:adverb) do
 		
@@ -27,15 +28,16 @@ defmodule BetterMangler.WordService do
 	def load_adjectives() do
 		{ :ok, adjectives } = 
 			"../../assets/adjectives.json"
-			|> Path.expand(__DIR__)
-			|> File.read!()
-			|> Poison.decode!()
+			|> load_and_parse
 			|> Map.fetch("adjectives")
 
 		adjectives
 	end
 
 	defp load_and_parse(file) do
-		
+		file
+		|> Path.expand(__DIR__)
+		|> File.read!()
+		|> Poison.decode!()
 	end
 end
