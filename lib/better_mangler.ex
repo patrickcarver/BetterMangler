@@ -1,3 +1,3 @@
 defmodule BetterMangler do
-  defdelegate run(word), to: BetterMangler.Mangler
+    defdelegate run(word), to: BetterMangler.Mangler
 end
