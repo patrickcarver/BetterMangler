@@ -1,6 +1,46 @@
 defmodule BetterMangler.Mangler do
     alias BetterMangler.WordService
 
+    @templates %{
+        1 => [
+                [ :noun ], 
+                [ :verb ], 
+                [ :adjective ], 
+                [ :adverb ]
+             ],
+        2 => [
+                [ :noun, :verb ], 
+                [ :adjective, :noun ], 
+                [ :verb, :adjective ]
+             ],
+        3 => [
+                [ :noun, :verb, :adverb ], 
+                [ :adjective, :noun, :verb ], 
+                [ :noun, :verb, :noun ]
+             ],
+        4 => [
+                [ :adjective, :noun, :verb, :adverb ]
+             ],
+        5 => [
+                [ :adverb, :adjective, :noun, :verb, :noun ]
+             ],
+        6 => [
+                [ :adverb, :adjective, :noun, :verb, :adjective, :noun ]
+             ],
+        7 => [
+                [ :adverb, :adjective, :noun, :adverb, :verb, :adjective, :noun ]
+             ],
+        8 => [
+                [ :adverb, :adjective, :noun, :verb, :adverb, :adjective, :noun ]
+             ],
+        9 => [
+                [ :adverb, :adverb, :adjective, :noun, :noun, :adverb, :adjective, :verb, :adverb ]
+             ],
+        10 => [
+                [ :adverb, :adverb, :adverb, :adjective, :noun, :noun, :adverb, :adjective, :verb, :adverb ] 
+              ]
+    }
+
     def run(word) do
         word_length = String.length(word)
 
@@ -39,20 +79,7 @@ defmodule BetterMangler.Mangler do
     end
 
     defp get_template(length) do
-        template = %{
-            1 => [[ :noun ], [ :verb ], [ :adjective ], [ :adverb ]],
-            2 => [[ :noun, :verb ], [ :adjective, :noun ]],
-            3 => [[ :noun, :verb, :adverb ],[ :adjective, :noun, :verb ], [ :noun, :verb, :noun ]],
-            4 => [[ :adjective, :noun, :verb, :adverb ]],
-            5 => [],
-            6 => [],
-            7 => [],
-            8 => [],
-            9 => [],
-            10 => []
-        }
-
-        { :ok, list } = template |> Map.fetch(length)
+        { :ok, list } = @templates |> Map.fetch(length)
         list |> Enum.random()
     end
 
