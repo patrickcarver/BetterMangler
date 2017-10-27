@@ -1,6 +1,6 @@
 # BetterMangler
 
-**TODO: Add description**
+This applications generates "bad" definitions of acronyms entered by the user.
 
 ## Installation
 
