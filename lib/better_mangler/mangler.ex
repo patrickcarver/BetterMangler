@@ -17,8 +17,9 @@ defmodule BetterMangler.Mangler do
     defp mangle(word) do
         template = word |> String.length |> get_template
 
-      #  word 
-      #  |> String.codepoints
+        letters = word |> String.codepoints
+
+        {template, letters}
     end
 
     defp get_template(length) do

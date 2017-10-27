@@ -1,6 +1,8 @@
 defmodule BetterMangler.WordService do
     alias Poison
 
+    
+
     def get_random(type) when type in [:adjective, :adverb, :noun, :verb] do
         type 
         |> load_words() 
