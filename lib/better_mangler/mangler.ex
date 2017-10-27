@@ -1,5 +1,5 @@
 defmodule BetterMangler.Mangler do
-	alias BetterMangler.WordService
+    alias BetterMangler.WordService
 
 	def run(word) do
 		word_length = String.length(word)
