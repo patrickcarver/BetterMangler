@@ -2,27 +2,41 @@ defmodule BetterMangler.WordService do
 	alias Poison
 
 	def get_random(:adverb) do
-		
+		load_adverbs |> Enum.random()
 	end
 
 	def get_random(:noun) do
-		
-	end
-
-	def get_random(:verb) do
-		
+		load_nouns() |> Enum.random()		
 	end
 
 	def get_random(:adjective) do
 		load_adjectives() |> Enum.random()
 	end
 
+	def get_random(:verb) do
+		
+	end	
+
 	def get_random(_) do
 		{:error, "Not a recognized option"}
 	end
 
+	def load_adverbs() do
+		{ :ok, adverbs } = 
+			"../../assets/adverbs.json"
+			|> load_and_parse
+			|> Map.fetch("adverbs")
+
+		adverbs
+	end
+
 	def load_nouns() do
-		
+		{ :ok, nouns } =
+			"../../assets/nouns.json"
+			|> load_and_parse
+			|> Map.fetch("nouns")
+
+		nouns
 	end
 
 	def load_adjectives() do
