@@ -29,6 +29,7 @@ defmodule BetterMangler.WordService do
     defp get_tense_if_verb(map, type) when type == :verb do
         tense = Enum.random(["past", "present"])
         {:ok, verb} = Map.fetch(map, tense)
+
         verb        
     end
 

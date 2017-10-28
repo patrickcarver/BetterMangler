@@ -60,7 +60,6 @@ defmodule BetterMangler.Mangler do
 
     defp mangle(word) do
         template = word |> String.length |> get_template
-
         letters = String.codepoints(word)
 
         process([], template, letters)
@@ -79,7 +78,7 @@ defmodule BetterMangler.Mangler do
     end
 
     defp get_template(length) do
-        {:ok, list} = @templates |> Map.fetch(length)
+        {:ok, list} = Map.fetch(@templates, length)
         Enum.random(list)
     end
 
