@@ -26,7 +26,7 @@ defmodule BetterMangler.Mangler do
              ],
         5 => [
                 [:adverb, :adjective, :noun, :verb, :noun],
-                [:noun, :noun, :noun, :noun, :noun]
+                [:adjective, :noun, :verb, :adjective, :noun]
              ],
         6 => [
                 [:adverb, :adjective, :noun, :verb, :adjective, :noun]
