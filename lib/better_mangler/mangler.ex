@@ -65,7 +65,7 @@ defmodule BetterMangler.Mangler do
         process([], template, letters)
     end
 
-    defp process(list, [template_head | template_tail], [letters_head | letters_tail]) do
+    defp process(list, [template_head | template_tail], [letters_head | letters_tail]) do        
         word = WordService.get_random(template_head, letters_head)
         
         process([word | list], template_tail, letters_tail)

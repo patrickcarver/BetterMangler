@@ -1,5 +1,6 @@
 defmodule BetterMangler.WordService do
     alias Poison
+    alias BetterMangler.Conjugater
 
     def get_random(type, letter) when type in [:adjective, :adverb, :noun, :verb] do
         type 
@@ -28,9 +29,10 @@ defmodule BetterMangler.WordService do
 
     defp get_tense_if_verb(map, type) when type == :verb do
         tense = Enum.random(["past", "present"])
+
         {:ok, verb} = Map.fetch(map, tense)
 
-        verb        
+        Conjugater.call_random(verb, tense)        
     end
 
     defp get_tense_if_verb(word, type) when type in [:adjective, :adverb, :noun] do
