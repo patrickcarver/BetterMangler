@@ -54,7 +54,7 @@ defmodule BetterMangler.Mangler do
                 {:error, "Please, no words/acronyms greater than 10 characters."}
             word_length == 0 ->
                 {:error, "The word/acronym is empty"}
-            :true ->
+            true ->
                 mangle(word)
         end
     end
@@ -77,8 +77,16 @@ defmodule BetterMangler.Mangler do
         word_list = Enum.reverse(list)
         verb_info = find_verb_number(word_list)
         
-        set_number_for_noun(word_list, verb_info)
-       # |> Enum.join(" ")
+        sentence_list = set_number_for_noun(word_list, verb_info)
+
+        create_sentence(sentence_list)
+    end
+
+    defp create_sentence(sentence_list) do
+        Enum.reduce(sentence_list, "", fn(item, acc) -> 
+            word = item |> Enum.at(1) |> String.capitalize
+            acc <> word <> " "
+        end) |> String.trim        
     end
 
     defp set_number_for_noun(list, {nil, 0}) do
