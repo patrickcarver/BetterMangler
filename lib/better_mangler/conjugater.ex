@@ -1,30 +1,38 @@
 defmodule BetterMangler.Conjugater do
-    def call(verb, tense) do
-        do_call(verb, tense, true)
-    end
-
     def call_random(verb, tense) do
-        do_call(verb, tense, third_singular?())
+        call(verb, tense, random_number())
     end
 
-    defp do_call(verb, "present", true) do
+    def call(verb, "present", :singular) do
+        [get_conjugation(verb), :singular]        
+    end
+
+    def call(verb, "present", :plural) do
+        [verb, :plural]
+    end
+
+    def call(verb, "past", number) do
+        [verb, number]
+    end
+
+    defp get_conjugation(verb) do
         cond do
             ends_in_consonant_and_y?(verb) ->
                 change_y_to_i_and_add_es(verb)
-            String.ends_with?(verb, ["ch", "o", "sh", "ss", "x"]) ->
+            needs_es?(verb) ->
                 verb <> "es"
             true ->
                 verb <> "s"
         end        
     end
 
-    defp do_call(verb, _tense, _third_singular) do
-        verb
-    end
-
     defp change_y_to_i_and_add_es(verb) do
         stem = String.replace_suffix(verb, "y", "i")
         stem <> "es"
+    end
+
+    defp needs_es?(verb) do
+        String.ends_with?(verb, ["ch", "o", "sh", "ss", "x"])
     end
 
     defp ends_in_consonant_and_y?(verb) do
@@ -36,7 +44,7 @@ defmodule BetterMangler.Conjugater do
         Regex.match?(~r/[b-df-hj-np-tv-z]/, penultimate)
     end
 
-    defp third_singular?() do
-        Enum.random(1..3) == 2
+    defp random_number() do
+        Enum.random([:singular, :plural])
     end
 end

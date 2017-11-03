@@ -1,5 +1,6 @@
 defmodule BetterMangler.Mangler do
     alias BetterMangler.WordService
+    alias Inflex
 
     @templates %{
         1 => [
@@ -65,16 +66,58 @@ defmodule BetterMangler.Mangler do
         process([], template, letters)
     end
 
-    defp process(list, [template_head | template_tail], [letters_head | letters_tail]) do        
+    defp process(list, [template_head | template_tail], [letters_head | letters_tail]) do   
         word = WordService.get_random(template_head, letters_head)
-        
-        process([word | list], template_tail, letters_tail)
+        data = List.flatten([template_head, word])
+
+        process([data | list], template_tail, letters_tail)
     end
 
-    defp process(list, [], []) do
+    defp process(list, [], []) do        
+        word_list = Enum.reverse(list)
+        verb_info = find_verb_number(word_list)
+        
+        set_number_for_noun(word_list, verb_info)
+       # |> Enum.join(" ")
+    end
+
+    defp set_number_for_noun(list, {nil, 0}) do
         list
-        |> Enum.reverse
-        |> Enum.join(" ")
+    end
+
+    defp set_number_for_noun(list, {number, index}) do
+        info = Enum.at(list, index)
+        type = Enum.at(info, 0)
+
+        if index == -1 do
+            list
+        else
+            if type == :noun do
+                word = Enum.at(info, 1)
+                method = String.to_atom(to_string(number) <> "ize")
+                noun = apply(Inflex, method, [word])
+                List.replace_at(list, index, [type, noun])
+            else
+                set_number_for_noun(list, {number, (index - 1)})
+            end
+        end        
+    end
+
+    defp find_verb_number(list) do
+        verb = Enum.find(list, &verb?/1)
+                 
+        if verb == nil do
+            { nil, 0 }
+        else
+            number = Enum.at(verb, 2)
+            index = Enum.find_index(list, &verb?/1) - 1
+
+            {number, index}
+        end     
+    end
+
+    defp verb?(item) do
+        Enum.at(item, 0) == :verb
     end
 
     defp get_template(length) do
